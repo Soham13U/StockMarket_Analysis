@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+        integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+
+    <script src="https://cdn.plot.ly/plotly.latest.min.js"></script>
+
+    <title>Stock Market Analysis</title>
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-info">
+            <h2> <a class="navbar-brand" href="#">Stock Analysis</a></h2>
+        </nav>
+    </header>
+
+    <main>
+        <div class="container-fluid py-3">
+            <form method="post">
+                {% csrf_token %}
+                <div class="row px-3">
+                    <div class="card-deck">
+                        <div class="card shadow">
+                            <div class="card-header rounded-top bg-info text-white">
+                                <h5 class="mb-0 card-title">{{title}}</h5>
+                            </div>
+                            <div class="card-body px-4 py-2">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            {{form.equityName.label}}
+                                            {{form.equityName}}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            {{form.interval.label}}
+                                            {{form.interval}}
+                                        </div>
+                                        <div class="form-group">
+                                            {{form.period.label}}
+                                            {{form.period}}
+                                        </div>
+                                        <div class="form-group">
+                                            {{form.chartType.label}}
+                                            {{form.chartType}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card shadow">
+                            <div class="card-header rounded-top bg-info text-white">
+                                <h5 class="mb-0 card-title">Indicators</h5>
+                            </div>
+                            <div class="card-body ">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="custom-control custom-switch">
+                                                    {{form.rsiStatus}}
+                                                    <label class="custom-control-label" for="id_rsiStatus">
+                                                        {{form.rsiStatus.label}}</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    {{form.rsiParameter.label}}
+                                                    {{form.rsiParameter}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="custom-control custom-switch">
+                                                    {{form.macdStatus}}
+                                                    <label class="custom-control-label" for="id_macdStatus">
+                                                        {{form.macdStatus.label}}</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    {{form.macdParameters.label}}
+                                                    {{form.macdParameters}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="custom-control custom-switch">
+                                                    {{form.ma1Status}}
+                                                    <label class="custom-control-label" for="id_ma1Status">
+                                                        {{form.ma1Status.label}}</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4 py-2">
+                                                <div class="form-group">
+                                                    {{form.ma1Parameter}}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-5 py-2">
+                                                <div class="form-group">
+                                                    {{form.ma1Type}}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3 py-2">
+                                                <div class="form-group">
+                                                    {{form.ma1Period}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="custom-control custom-switch">
+                                                    {{form.ma2Status}}
+                                                    <label class="custom-control-label" for="id_ma2Status">
+                                                        {{form.ma2Status.label}}</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4 py-2">
+                                                <div class="form-group">
+                                                    {{form.ma2Parameter}}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-5 py-2">
+                                                <div class="form-group">
+                                                    {{form.ma2Type}}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3 py-2">
+                                                <div class="form-group">
+                                                    {{form.ma2Period}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row px-4 py-3">
+                    <div class="col-md-12">
+                        <input type="submit" class="btn btn-info w-100 shadow" value="Update Chart">
+                    </div>
+                </div>
+            </form>
+            <div class="row overflow-auto">
+                {{chart | safe}}
+            </div>
+        </div>
+
+    </main>
+
+    <script src="https://cdn.plot.ly/plotly.latest.min.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
+        crossorigin="anonymous"></script>
+
+</body>
+
+</html>
